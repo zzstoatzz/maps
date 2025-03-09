@@ -19,6 +19,8 @@ from maps.types import (
     Point,
 )
 
+ox.settings.use_cache = False
+
 mcp = FastMCP(
     "Street map generator",
     dependencies=["maps@git+https://github.com/zzstoatzz/maps.git@mcp"],
