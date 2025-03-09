@@ -53,7 +53,7 @@ class _BaseFromOptions(TypedDict):
     network_type: NotRequired[
         Annotated[
             NetworkType,
-            Field(description="Type of network to generate, defaults to 'all'"),
+            Field(description="Type of network to generate, defaults to 'street'"),
         ]
     ]
     simplify: NotRequired[
