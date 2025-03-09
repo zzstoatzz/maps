@@ -120,7 +120,7 @@ if __name__ == "__main__":
 
     # Run server if no args provided or --server flag is used
     if (
-        len(sys.argv) == 1 or args.register_mcp_server
+        len(sys.argv) == 1 or args.register_and_run_mcp_server
     ):  # mcp extra of this library required to run server
         with register_mcp_server_with_atproto(
             server=mcp,
@@ -131,6 +131,7 @@ if __name__ == "__main__":
             version="0.0.1",
         ):
             print("registered MCP server to atproto!")
+            mcp.run()
     else:
         # Handle usage suggested by bsky post https://bsky.app/profile/alternatebuild.dev/post/3ljvxn7dy3c2l
         old_main(args)
