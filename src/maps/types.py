@@ -31,19 +31,32 @@ OutputImageLocation = Annotated[
 
 
 class PlotOptions(TypedDict):
-    figsize: Annotated[tuple[float, float], Field(description="Size of the figure")]
-    node_size: Annotated[int, Field(description="Size of the nodes")]
-    dpi: Annotated[int, Field(description="Resolution of the output image")]
-    edge_linewidth: Annotated[float, Field(description="Width of the edges")]
-    bgcolor: Annotated[
-        str,
-        Field(description="(hex) Background color", examples=["#ffffff", "#000000"]),
+    figsize: NotRequired[
+        Annotated[tuple[float, float], Field(description="Size of the figure")]
     ]
-    edge_color: Annotated[
-        str,
-        Field(description="(hex) Color of the edges", examples=["#ffffff", "#000000"]),
+    node_size: NotRequired[Annotated[int, Field(description="Size of the nodes")]]
+    dpi: NotRequired[
+        Annotated[int, Field(description="Resolution of the output image")]
     ]
-    close: Annotated[bool, Field(description="Whether to close the plot")]
+    edge_linewidth: NotRequired[
+        Annotated[float, Field(description="Width of the edges")]
+    ]
+    bgcolor: NotRequired[
+        Annotated[
+            str,
+            Field(
+                description="(hex) Background color", examples=["#ffffff", "#000000"]
+            ),
+        ]
+    ]
+    edge_color: NotRequired[
+        Annotated[
+            str,
+            Field(
+                description="(hex) Color of the edges", examples=["#ffffff", "#000000"]
+            ),
+        ]
+    ]
 
 
 NetworkType = Literal["drive", "bike", "walk", "all"]
