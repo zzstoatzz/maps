@@ -1,6 +1,6 @@
 # /// script
 # dependencies = [
-#   "maps@git+https://github.com/zzstoatzz/maps.git",
+#   "maps[storage]@git+https://github.com/zzstoatzz/maps.git",
 #   "mcproto_client@git+https://github.com/zzstoatzz/mcproto.git#subdirectory=clients/python"
 # ]
 # ///
