@@ -43,7 +43,6 @@ class PlotOptions(TypedDict):
         str,
         Field(description="(hex) Color of the edges", examples=["#ffffff", "#000000"]),
     ]
-    show: Annotated[bool, Field(description="Whether to show the plot")]
     close: Annotated[bool, Field(description="Whether to close the plot")]
 
 

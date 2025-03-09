@@ -54,7 +54,7 @@ def plot_street_map_from_address(
 ) -> str:
     """Generate a street map from an address."""
     G = generators.from_address(address, **address_options)
-    fig, _ = ox.plot_graph(G, **plot_options)
+    fig, _ = ox.plot_graph(G, show=False, **plot_options)
     return storage.save_figure(
         fig, address_options.get("network_type", "street"), plot_options["dpi"]
     )
@@ -68,7 +68,7 @@ def plot_street_map_from_place(
 ) -> str:
     """Generate a street map from a place."""
     G = generators.from_place(place, **place_options)
-    fig, _ = ox.plot_graph(G, **plot_options)
+    fig, _ = ox.plot_graph(G, show=False, **plot_options)
     return storage.save_figure(
         fig, place_options.get("network_type", "street"), plot_options["dpi"]
     )
@@ -82,7 +82,7 @@ def plot_street_map_from_point(
 ) -> str:
     """Generate a street map from a point."""
     G = generators.from_point(point, **point_options)
-    fig, _ = ox.plot_graph(G, **plot_options)
+    fig, _ = ox.plot_graph(G, show=False, **plot_options)
     return storage.save_figure(
         fig, point_options.get("network_type", "street"), plot_options["dpi"]
     )
