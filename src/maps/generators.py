@@ -14,7 +14,7 @@ from maps.types import (
 
 def from_address(
     address: str,
-    dist: int = 5000,
+    dist: int = 1000,
     **kwargs: Unpack[GraphFromAddressOptions],
 ) -> MultiDiGraph:
     """Generate a street network graph from an address.

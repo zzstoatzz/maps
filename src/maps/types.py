@@ -1,5 +1,6 @@
 """Highly annotated types for the maps package."""
 
+from collections.abc import Sequence
 from typing import Annotated, Literal, NotRequired
 
 from pydantic import Field
@@ -34,7 +35,15 @@ class PlotOptions(TypedDict):
     figsize: NotRequired[
         Annotated[tuple[float, float], Field(description="Size of the figure")]
     ]
-    node_size: NotRequired[Annotated[int, Field(description="Size of the nodes")]]
+    node_size: NotRequired[
+        Annotated[
+            float | Sequence[float],
+            Field(
+                description="Size of the nodes or list of sizes, defaults to 15",
+                examples=[15, [15, 20]],
+            ),
+        ]
+    ]
     dpi: NotRequired[
         Annotated[int, Field(description="Resolution of the output image")]
     ]

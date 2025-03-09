@@ -19,7 +19,7 @@ from maps.types import (
     Point,
 )
 
-ox.settings.use_cache = False
+ox.settings.use_cache = False  # read-only fs inside MCP server # type: ignore
 
 mcp = FastMCP(
     "Street map generator",
@@ -27,11 +27,16 @@ mcp = FastMCP(
 )
 
 
+def _make_url(key: str) -> str:
+    return f"{r2_settings.R2_PUBLIC_BUCKET_URL}/{key}"
+
+
 class R2Settings(BaseSettings):
     model_config = SettingsConfigDict(extra="ignore", env_file=".env")
 
     R2_BUCKET: str
     R2_ENDPOINT_URL: str
+    R2_PUBLIC_BUCKET_URL: str
     AWS_ACCESS_KEY_ID: str
     AWS_SECRET_ACCESS_KEY: str
 
@@ -46,43 +51,66 @@ storage = R2Storage(
 )
 
 
-@mcp.tool()
+# @mcp.tool()
 def plot_street_map_from_address(
     address: Address,
-    address_options: GraphFromAddressOptions,
-    plot_options: PlotOptions,
+    address_options: GraphFromAddressOptions | None = None,
+    plot_options: PlotOptions | None = None,
 ) -> str:
     """Generate a street map from an address. provide minimal options unless specifically requested."""
+    address_options = address_options or {}
+    plot_options = plot_options or {}
     G = generators.from_address(address, **address_options)
     fig, _ = ox.plot_graph(G, show=False, **plot_options)
-    return storage.save_figure(
-        fig, address_options.get("network_type", "street"), plot_options.get("dpi", 300)
+    key = storage.save_figure(
+        fig,
+        address_options.get("network_type", "street"),
+        address.replace(",", "").replace(" ", "_"),
+        plot_options.get("dpi", 300),
     )
+    return _make_url(key)
 
 
 @mcp.tool()
 def plot_street_map_from_place(
     place: Place,
-    place_options: GraphFromPlaceOptions,
-    plot_options: PlotOptions,
+    place_options: GraphFromPlaceOptions | None = None,
+    plot_options: PlotOptions | None = None,
 ) -> str:
     """Generate a street map from a place. provide minimal options unless specifically requested."""
+    place_options = place_options or {}
+    plot_options = plot_options or {}
     G = generators.from_place(place, **place_options)
     fig, _ = ox.plot_graph(G, show=False, **plot_options)
-    return storage.save_figure(
-        fig, place_options.get("network_type", "street"), plot_options.get("dpi", 300)
+    key = storage.save_figure(
+        fig,
+        place_options.get("network_type", "street"),
+        place.replace(",", "").replace(" ", "_"),
+        plot_options.get("dpi", 300),
     )
+    return _make_url(key)
 
 
 @mcp.tool()
 def plot_street_map_from_point(
     point: Point,
-    point_options: GraphFromPointOptions,
-    plot_options: PlotOptions,
+    point_options: GraphFromPointOptions | None = None,
+    plot_options: PlotOptions | None = None,
 ) -> str:
     """Generate a street map from a point. provide minimal options unless specifically requested."""
+    point_options = point_options or {}
+    plot_options = plot_options or {}
+
     G = generators.from_point(point, **point_options)
     fig, _ = ox.plot_graph(G, show=False, **plot_options)
-    return storage.save_figure(
-        fig, point_options.get("network_type", "street"), plot_options.get("dpi", 300)
+    key = storage.save_figure(
+        fig,
+        point_options.get("network_type", "street"),
+        "some_coordinate_point",
+        plot_options.get("dpi", 300),
     )
+    return _make_url(key)
+
+
+if __name__ == "__main__":
+    print(plot_street_map_from_address("2530 16th St, San Francisco, CA 94103"))

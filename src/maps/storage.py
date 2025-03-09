@@ -43,6 +43,7 @@ class R2Storage:
         self,
         fig: mpl_fig.Figure,
         network_type: str,
+        namespace: str,
         dpi: int = 300,
     ) -> str:
         """Save matplotlib figure to R2.
@@ -53,7 +54,7 @@ class R2Storage:
             dpi: DPI for saved image
 
         Returns:
-            Public URL of the saved image
+            key of newly created object in R2
         """
         # Create buffer and save figure to it
         buf = io.BytesIO()
@@ -62,9 +63,9 @@ class R2Storage:
 
         # Generate filename with timestamp
         timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-        key = f"maps/{network_type}_street_map_{timestamp}.png"
+        key = f"{namespace}/{network_type}_{timestamp}.png"
 
         # Upload to R2
         self.client.upload_fileobj(buf, self.bucket, key)
 
-        return f"https://{self.bucket}.r2.dev/{key}"
+        return key
