@@ -29,8 +29,8 @@ mcp = FastMCP(
     "Street map generator",
     instructions=(
         "use to create street maps from addresses or coordinates, "
-        "show urls from the tools to the user. default to walking paths "
-        "unless otherwise requested. "
+        "show urls from the tools to the user or else they will not be able to see anything. "
+        "default to walking paths unless otherwise requested. "
     ),
     dependencies=["maps[storage]@git+https://github.com/zzstoatzz/maps.git@mcp"],
 )
@@ -66,7 +66,10 @@ def plot_street_map_from_address(
     address_options: GraphFromAddressOptions | None = None,
     plot_options: PlotOptions | None = None,
 ) -> str:
-    """Generate a street map from an address."""
+    """Generate a street map from an address.
+
+    the resulting path should be shown to the user.
+    """
     address_options = address_options or {}
     plot_options = plot_options or {"node_size": 1, "edge_linewidth": 0.5}
     G = generators.from_address(address, **address_options)
@@ -86,7 +89,10 @@ def plot_street_map_from_coordinates(
     point_options: GraphFromPointOptions | None = None,
     plot_options: PlotOptions | None = None,
 ) -> str:
-    """Generate a street map from a point."""
+    """Generate a street map from a point.
+
+    the resulting path should be shown to the user.
+    """
     point_options = point_options or {}
     plot_options = plot_options or {"node_size": 1, "edge_linewidth": 0.5}
 
