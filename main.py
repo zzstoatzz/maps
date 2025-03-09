@@ -27,21 +27,6 @@ def generate_street_map_from_address(
     edge_color: str = "white",
     dist: int = 5000,
 ) -> None:
-    """
-    Generate and save a map of a street network.
-
-    Args:
-        address: Address to download the street network
-        network_type: Type of street network ('drive', 'bike', 'walk', or 'all')
-        save_path: Path to save the output image (None for display only)
-        figsize: Figure dimensions in inches
-        dpi: Resolution of output image
-        edge_linewidth: Width of the street lines
-        node_size: Size of intersection nodes (0 to hide)
-        bgcolor: Background color of the map
-        edge_color: Color of the street lines
-        dist: Distance in meters to search from the place
-    """
     print(f"Downloading street network for {address} (type: {network_type})...")
     graph = ox.graph_from_address(address, network_type=network_type, dist=dist)
     graph_proj = ox.project_graph(graph)
@@ -131,7 +116,6 @@ def parse_args() -> argparse.Namespace:
 if __name__ == "__main__":
     args = parse_args()
 
-    # Set default edge colors based on network type if not specified
     if not args.edge_color:
         args.edge_color = {
             "drive": "#ffffff",
@@ -140,7 +124,6 @@ if __name__ == "__main__":
             "all": "#ffffff",
         }[args.network_type]
 
-    # Generate default output path if not specified
     if not args.output:
         timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
         args.output = f"{args.network_type}_street_map_{timestamp}.png"
