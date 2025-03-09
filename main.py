@@ -119,7 +119,9 @@ if __name__ == "__main__":
         with register_mcp_server_with_atproto(
             server=mcp,
             name="street-map-generator",
-            package="https://raw.githubusercontent.com/zzstoatzz/maps/refs/heads/main/main.py",
+            installation=(
+                "uv run https://raw.githubusercontent.com/zzstoatzz/maps/refs/heads/main/main.py"
+            ),
             version="0.0.1",
         ):
             mcp.run()
