@@ -1,7 +1,6 @@
 # /// script
 # dependencies = [
-#   "maps[storage]@git+https://github.com/zzstoatzz/maps.git",
-#   "mcproto_client@git+https://github.com/zzstoatzz/mcproto.git#subdirectory=clients/python"
+#   "maps[storage,mcp]@git+https://github.com/zzstoatzz/maps.git"
 # ]
 # ///
 
@@ -43,7 +42,7 @@ mcp = FastMCP(
         "show urls from the tools to the user or else they will not be able to see anything. "
         "default to walking paths unless otherwise requested. "
     ),
-    dependencies=["maps[storage]@git+https://github.com/zzstoatzz/maps.git"],
+    dependencies=["maps[storage,mcp]@git+https://github.com/zzstoatzz/maps.git"],
 )
 
 
