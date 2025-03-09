@@ -28,7 +28,7 @@ def from_address(
         dist: Distance in meters to search from the address
 
     Returns:
-        A NetworkX MultiDiGraph representing the street network
+        A NetworkX MultiDiGraph representing the street network (projected to UTM)
     """
     G = ox.graph_from_address(
         address,
@@ -36,7 +36,7 @@ def from_address(
         **kwargs,
     )
     assert isinstance(G, MultiDiGraph)
-    return G
+    return ox.project_graph(G)
 
 
 def from_place(
@@ -50,9 +50,10 @@ def from_place(
         network_type: Type of network to generate
 
     Returns:
-        A NetworkX MultiDiGraph representing the street network
+        A NetworkX MultiDiGraph representing the street network (projected to UTM)
     """
-    return ox.graph_from_place(place, **kwargs)
+    G = ox.graph_from_place(place, **kwargs)
+    return ox.project_graph(G)
 
 
 def from_point(
@@ -68,6 +69,7 @@ def from_point(
         network_type: Type of network to generate
 
     Returns:
-        A NetworkX MultiDiGraph representing the street network
+        A NetworkX MultiDiGraph representing the street network (projected to UTM)
     """
-    return ox.graph_from_point(point, dist=dist, **kwargs)
+    G = ox.graph_from_point(point, dist=dist, **kwargs)
+    return ox.project_graph(G)

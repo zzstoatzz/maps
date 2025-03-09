@@ -454,12 +454,14 @@ version = "0.1.0"
 source = { editable = "." }
 dependencies = [
     { name = "matplotlib" },
-    { name = "mcp", extra = ["cli"] },
     { name = "osmnx" },
     { name = "pydantic-settings" },
 ]
 
 [package.optional-dependencies]
+mcp = [
+    { name = "mcp", extra = ["cli"] },
+]
 storage = [
     { name = "boto3" },
 ]
@@ -474,11 +476,11 @@ dev = [
 requires-dist = [
     { name = "boto3", marker = "extra == 'storage'" },
     { name = "matplotlib", specifier = ">=3.10.1" },
-    { name = "mcp", extras = ["cli"] },
+    { name = "mcp", extras = ["cli"], marker = "extra == 'mcp'" },
     { name = "osmnx", specifier = ">=2.0.1" },
     { name = "pydantic-settings" },
 ]
-provides-extras = ["storage"]
+provides-extras = ["storage", "mcp"]
 
 [package.metadata.requires-dev]
 dev = [
