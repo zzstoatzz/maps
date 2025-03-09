@@ -9,12 +9,12 @@ import matplotlib.figure as mpl_fig
 from botocore.config import Config
 
 
-class R2Storage:
+class R2Bucket:
     """Handles storing map images in Cloudflare R2."""
 
     def __init__(
         self,
-        bucket: str,
+        bucket_name: str,
         endpoint_url: str,
         region_name: str = "auto",
         **credentials: Any,
@@ -27,7 +27,7 @@ class R2Storage:
             region_name: R2 region name
             **credentials: AWS credentials (access_key_id, secret_access_key)
         """
-        self.bucket = bucket
+        self.bucket_name = bucket_name
         self.client = boto3.client(
             "s3",
             endpoint_url=endpoint_url,
@@ -38,6 +38,14 @@ class R2Storage:
             ),
             **credentials,
         )
+
+    def upload_fileobj(
+        self,
+        fileobj: io.BytesIO,
+        key: str,
+    ) -> None:
+        """Upload a file object to R2."""
+        self.client.upload_fileobj(fileobj, self.bucket_name, key)
 
     def save_figure(
         self,
@@ -65,7 +73,6 @@ class R2Storage:
         timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
         key = f"{namespace}/{network_type}_{timestamp}.png"
 
-        # Upload to R2
-        self.client.upload_fileobj(buf, self.bucket, key)
+        self.upload_fileobj(buf, key)
 
         return key

@@ -8,7 +8,7 @@ from mcp.server.fastmcp import FastMCP
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 from maps import generators
-from maps.storage import R2Storage
+from maps.storage import R2Bucket
 from maps.types import (
     Address,
     GraphFromAddressOptions,
@@ -21,15 +21,15 @@ ox.settings.use_cache = False  # read-only fs inside MCP server # type: ignore
 
 mcp = FastMCP(
     "Street map generator",
-    dependencies=["maps@git+https://github.com/zzstoatzz/maps.git@mcp"],
+    dependencies=["maps[storage]@git+https://github.com/zzstoatzz/maps.git@mcp"],
 )
 
 
 def _make_url(key: str) -> str:
-    return f"{r2_settings.R2_PUBLIC_BUCKET_URL}/{key}"
+    return f"{r2_bucket_settings.R2_PUBLIC_BUCKET_URL}/{key}"
 
 
-class R2Settings(BaseSettings):
+class R2BucketSettings(BaseSettings):
     model_config = SettingsConfigDict(extra="ignore", env_file=".env")
 
     R2_BUCKET: str
@@ -39,13 +39,13 @@ class R2Settings(BaseSettings):
     AWS_SECRET_ACCESS_KEY: str
 
 
-r2_settings = R2Settings()  # type: ignore
+r2_bucket_settings = R2BucketSettings()  # type: ignore
 
-storage = R2Storage(
-    bucket=r2_settings.R2_BUCKET,
-    endpoint_url=r2_settings.R2_ENDPOINT_URL,
-    aws_access_key_id=r2_settings.AWS_ACCESS_KEY_ID,
-    aws_secret_access_key=r2_settings.AWS_SECRET_ACCESS_KEY,
+r2_bucket = R2Bucket(
+    bucket_name=r2_bucket_settings.R2_BUCKET,
+    endpoint_url=r2_bucket_settings.R2_ENDPOINT_URL,
+    aws_access_key_id=r2_bucket_settings.AWS_ACCESS_KEY_ID,
+    aws_secret_access_key=r2_bucket_settings.AWS_SECRET_ACCESS_KEY,
 )
 
 
@@ -60,7 +60,7 @@ def plot_street_map_from_address(
     plot_options = plot_options or {"node_size": 1}
     G = generators.from_address(address, **address_options)
     fig, _ = ox.plot_graph(G, show=False, **plot_options)
-    key = storage.save_figure(
+    key = r2_bucket.save_figure(
         fig,
         address_options.get("network_type", "street"),
         address.replace(",", "").replace(" ", "_"),
@@ -81,7 +81,7 @@ def plot_street_map_from_coordinates(
 
     G = generators.from_point(point, **point_options)
     fig, _ = ox.plot_graph(G, show=False, **plot_options)
-    key = storage.save_figure(
+    key = r2_bucket.save_figure(
         fig,
         point_options.get("network_type", "street"),
         "some_coordinate_point",
