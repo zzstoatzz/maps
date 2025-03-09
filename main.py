@@ -9,7 +9,7 @@
 Street Network Map Generator
 Generates a visualization of a place's street network using OSMnx.
 
-Run with --register-mcp-server to register the server to atproto.
+Run with --register-and-run-mcp-server to register the server to atproto and run it.
 
 """
 
