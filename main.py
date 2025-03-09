@@ -88,7 +88,3 @@ def plot_street_map_from_coordinates(
         plot_options.get("dpi", 300),
     )
     return _make_url(key)
-
-
-if __name__ == "__main__":
-    print(plot_street_map_from_address("2530 16th St, San Francisco, CA 94103"))
