@@ -1,6 +1,8 @@
 """Highly annotated types for the maps package."""
 
-from typing import Annotated, Literal, NotRequired, TypedDict
+from __future__ import annotations
+
+from typing import Annotated, Literal, NotRequired
 
 from pydantic import Field
 
