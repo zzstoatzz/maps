@@ -18,7 +18,10 @@ from maps.types import (
     Point,
 )
 
-mcp = FastMCP("Street map generator")
+mcp = FastMCP(
+    "Street map generator",
+    dependencies=["maps@git+https://github.com/zzstoatzz/maps.git@mcp"],
+)
 
 
 @mcp.tool()
