@@ -1,3 +1,7 @@
+# /// script
+# dependencies = ["maps@git+https://github.com/zzstoatzz/maps.git"]
+# ///
+
 """
 Street Network Map Generator
 Generates a visualization of a place's street network using OSMnx.
