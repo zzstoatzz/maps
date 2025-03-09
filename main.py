@@ -1,5 +1,8 @@
 # /// script
-# dependencies = ["maps@git+https://github.com/zzstoatzz/maps.git"]
+# dependencies = [
+#   "maps@git+https://github.com/zzstoatzz/maps.git",
+#   "mcproto_client@git+https://github.com/zzstoatzz/mcproto.git#subdirectory=clients/python"
+# ]
 # ///
 
 """
@@ -124,7 +127,7 @@ if __name__ == "__main__":
             ),
             version="0.0.1",
         ):
-            mcp.run()
+            print("registered MCP server to atproto!")
     else:
         # Handle usage suggested by bsky post https://bsky.app/profile/alternatebuild.dev/post/3ljvxn7dy3c2l
         old_main(args)
