@@ -49,7 +49,7 @@ storage = R2Storage(
 )
 
 
-# @mcp.tool()
+@mcp.tool()
 def plot_street_map_from_address(
     address: Address,
     address_options: GraphFromAddressOptions | None = None,
