@@ -29,7 +29,8 @@ mcp = FastMCP(
     "Street map generator",
     instructions=(
         "use to create street maps from addresses or coordinates, "
-        "show urls from the tools to the user"
+        "show urls from the tools to the user. default to walking paths "
+        "unless otherwise requested. "
     ),
     dependencies=["maps[storage]@git+https://github.com/zzstoatzz/maps.git@mcp"],
 )
