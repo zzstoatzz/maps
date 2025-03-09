@@ -1,0 +1,14 @@
+[project]
+name = "maps"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = ["matplotlib>=3.10.1", "osmnx>=2.0.1"]
+
+[build-system]
+requires = ["uv_build>=0.6.3,<0.7.0"]
+build-backend = "uv_build"
+
+[tool.ruff.lint]
+extend-select = ["I", "UP"]
