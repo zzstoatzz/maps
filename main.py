@@ -18,7 +18,7 @@ import osmnx as ox
 def generate_street_map_from_address(
     address: str,
     network_type: Literal["drive", "bike", "walk", "all"] = "drive",
-    save_path: str | None = None,
+    save_path: Path | str | None = None,
     figsize: tuple[int, int] = (12, 10),
     dpi: int = 300,
     edge_linewidth: float = 0.5,
@@ -125,8 +125,10 @@ if __name__ == "__main__":
         }[args.network_type]
 
     if not args.output:
+        output_dir = Path("img")
+        output_dir.mkdir(parents=True, exist_ok=True)
         timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-        args.output = f"{args.network_type}_street_map_{timestamp}.png"
+        args.output = output_dir / f"{args.network_type}_street_map_{timestamp}.png"
 
     generate_street_map_from_address(
         address=args.address,
