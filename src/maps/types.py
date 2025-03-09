@@ -108,13 +108,7 @@ class _BaseFromOptions(TypedDict):
     ]
 
 
-class GraphFromAddressOptions(_BaseFromOptions):
-    dist_type: NotRequired[
-        Annotated[
-            Literal["bbox", "network"],
-            Field(description="Type of distance to use, defaults to 'bbox'"),
-        ]
-    ]
+class GraphFromAddressOptions(_BaseFromOptions): ...
 
 
 class GraphFromPlaceOptions(_BaseFromOptions):
@@ -126,10 +120,4 @@ class GraphFromPlaceOptions(_BaseFromOptions):
     ]
 
 
-class GraphFromPointOptions(_BaseFromOptions):
-    dist_type: NotRequired[
-        Annotated[
-            Literal["bbox", "network"],
-            Field(description="Type of distance to use, defaults to 'bbox'"),
-        ]
-    ]
+class GraphFromPointOptions(_BaseFromOptions): ...

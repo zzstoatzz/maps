@@ -61,7 +61,7 @@ def plot_street_map_from_address(
 ) -> str:
     """Generate a street map from an address."""
     address_options = address_options or {}
-    plot_options = plot_options or {"node_size": 1}
+    plot_options = plot_options or {"node_size": 1, "edge_linewidth": 0.5}
     G = generators.from_address(address, **address_options)
     fig, _ = ox.plot_graph(G, show=False, **plot_options)
     key = r2_bucket.save_figure(
@@ -81,7 +81,7 @@ def plot_street_map_from_coordinates(
 ) -> str:
     """Generate a street map from a point."""
     point_options = point_options or {}
-    plot_options = plot_options or {"node_size": 1}
+    plot_options = plot_options or {"node_size": 1, "edge_linewidth": 0.5}
 
     G = generators.from_point(point, **point_options)
     fig, _ = ox.plot_graph(G, show=False, **plot_options)
