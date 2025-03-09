@@ -3,8 +3,18 @@ name = "maps"
 version = "0.1.0"
 description = "Add your description here"
 readme = "README.md"
-requires-python = ">=3.13"
-dependencies = ["matplotlib>=3.10.1", "osmnx>=2.0.1"]
+requires-python = ">=3.11"
+dependencies = ["matplotlib>=3.10.1", "osmnx>=2.0.1", "pydantic-settings"]
+
+[dependency-groups]
+dev = ["ipython", "ruff"]
+
+[project.optional-dependencies]
+storage = ["boto3"]
+mcp = [
+    "mcp[cli]",
+    "mcproto-client@git+https://github.com/zzstoatzz/mcproto.git#subdirectory=clients/python",
+]
 
 [build-system]
 requires = ["uv_build>=0.6.3,<0.7.0"]
