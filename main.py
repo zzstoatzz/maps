@@ -21,6 +21,10 @@ ox.settings.use_cache = False  # read-only fs inside MCP server # type: ignore
 
 mcp = FastMCP(
     "Street map generator",
+    instructions=(
+        "use to create street maps from addresses or coordinates, "
+        "show urls from the tools to the user"
+    ),
     dependencies=["maps[storage]@git+https://github.com/zzstoatzz/maps.git@mcp"],
 )
 
