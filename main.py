@@ -12,9 +12,7 @@ from maps.storage import R2Storage
 from maps.types import (
     Address,
     GraphFromAddressOptions,
-    GraphFromPlaceOptions,
     GraphFromPointOptions,
-    Place,
     PlotOptions,
     Point,
 )
@@ -57,9 +55,9 @@ def plot_street_map_from_address(
     address_options: GraphFromAddressOptions | None = None,
     plot_options: PlotOptions | None = None,
 ) -> str:
-    """Generate a street map from an address. provide minimal options unless specifically requested."""
+    """Generate a street map from an address."""
     address_options = address_options or {}
-    plot_options = plot_options or {}
+    plot_options = plot_options or {"node_size": 1}
     G = generators.from_address(address, **address_options)
     fig, _ = ox.plot_graph(G, show=False, **plot_options)
     key = storage.save_figure(
@@ -72,34 +70,14 @@ def plot_street_map_from_address(
 
 
 @mcp.tool()
-def plot_street_map_from_place(
-    place: Place,
-    place_options: GraphFromPlaceOptions | None = None,
-    plot_options: PlotOptions | None = None,
-) -> str:
-    """Generate a street map from a place. provide minimal options unless specifically requested."""
-    place_options = place_options or {}
-    plot_options = plot_options or {}
-    G = generators.from_place(place, **place_options)
-    fig, _ = ox.plot_graph(G, show=False, **plot_options)
-    key = storage.save_figure(
-        fig,
-        place_options.get("network_type", "street"),
-        place.replace(",", "").replace(" ", "_"),
-        plot_options.get("dpi", 300),
-    )
-    return _make_url(key)
-
-
-@mcp.tool()
-def plot_street_map_from_point(
+def plot_street_map_from_coordinates(
     point: Point,
     point_options: GraphFromPointOptions | None = None,
     plot_options: PlotOptions | None = None,
 ) -> str:
-    """Generate a street map from a point. provide minimal options unless specifically requested."""
+    """Generate a street map from a point."""
     point_options = point_options or {}
-    plot_options = plot_options or {}
+    plot_options = plot_options or {"node_size": 1}
 
     G = generators.from_point(point, **point_options)
     fig, _ = ox.plot_graph(G, show=False, **plot_options)

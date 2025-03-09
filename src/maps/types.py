@@ -15,7 +15,11 @@ Address = Annotated[
 ]
 
 Place = Annotated[
-    str, Field(description="Place to generate the map from", examples=["Anytown, USA"])
+    str | dict[str, str] | list[str | dict[str, str]],
+    Field(
+        description="Place to generate the map from",
+        examples=["Anytown, USA", {"city": "Anytown", "state": "USA"}],
+    ),
 ]
 
 Point = Annotated[

@@ -6,14 +6,17 @@ import osmnx as ox
 from networkx import MultiDiGraph
 
 from maps.types import (
+    Address,
     GraphFromAddressOptions,
     GraphFromPlaceOptions,
     GraphFromPointOptions,
+    Place,
+    Point,
 )
 
 
 def from_address(
-    address: str,
+    address: Address,
     dist: int = 1000,
     **kwargs: Unpack[GraphFromAddressOptions],
 ) -> MultiDiGraph:
@@ -37,7 +40,7 @@ def from_address(
 
 
 def from_place(
-    place: str | dict[str, str] | list[str | dict[str, str]],
+    place: Place,
     **kwargs: Unpack[GraphFromPlaceOptions],
 ) -> MultiDiGraph:
     """Generate a street network graph from a place name.
@@ -53,7 +56,7 @@ def from_place(
 
 
 def from_point(
-    point: tuple[float, float],
+    point: Point,
     dist: int = 1000,
     **kwargs: Unpack[GraphFromPointOptions],
 ) -> MultiDiGraph:
