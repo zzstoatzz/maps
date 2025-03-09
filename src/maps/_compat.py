@@ -67,9 +67,9 @@ def parse_args() -> argparse.Namespace:
         help="Address to generate map for",
     )
     parser.add_argument(
-        "--server",
+        "--register-mcp-server",
         action="store_true",
-        help="Run as MCP server instead of CLI tool",
+        help="Register the MCP server to atproto",
     )
     parser.add_argument(
         "--network-type",

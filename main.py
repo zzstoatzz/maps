@@ -8,6 +8,9 @@
 """
 Street Network Map Generator
 Generates a visualization of a place's street network using OSMnx.
+
+Run with --register-mcp-server to register the server to atproto.
+
 """
 
 import sys
@@ -117,7 +120,7 @@ if __name__ == "__main__":
 
     # Run server if no args provided or --server flag is used
     if (
-        len(sys.argv) == 1 or args.server
+        len(sys.argv) == 1 or args.register_mcp_server
     ):  # mcp extra of this library required to run server
         with register_mcp_server_with_atproto(
             server=mcp,
