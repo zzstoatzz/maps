@@ -29,7 +29,7 @@ def generate_street_map_from_address(
 ) -> None:
     print(f"Downloading street network for {address} (type: {network_type})...")
     graph = ox.graph_from_address(address, network_type=network_type, dist=dist)
-    graph_proj = ox.project_graph(graph)
+    graph_proj = ox.project_graph(graph)  # type: ignore
 
     print("Generating map visualization...")
     fig, ax = ox.plot_graph(
