@@ -19,7 +19,6 @@ import sys
 
 import osmnx as ox
 from mcp.server.fastmcp import FastMCP
-from mcproto_client import register_mcp_server_with_atproto
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 from maps import generators
@@ -124,6 +123,8 @@ if __name__ == "__main__":
     if (
         len(sys.argv) == 1 or args.register_and_run_mcp_server
     ):  # mcp extra of this library required to run server
+        from mcproto_client import register_mcp_server_with_atproto
+
         with register_mcp_server_with_atproto(
             server=mcp,
             name="street-map-generator",
